@@ -1,23 +1,12 @@
 <?php
 
-/**
- * This file is part of Opensoft Doctrine Postgres Types.
- *
- * Copyright (c) 2013 Opensoft (http://opensoftdev.com)
- */
-namespace Doctrine\Tests\DBAL\Types;
+namespace Doctrine\Tests\DBAL\PostgresTypes;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Doctrine\Tests\DBAL\Types\TsqueryTest.
- *
- * Unit tests for the Tsquery type
- *
- * @author Ivan Molchanov <ivan.molchanov@opensoftdev.ru>
- */
-class TsqueryTest extends \PHPUnit_Framework_TestCase
+class TsqueryTest extends TestCase
 {
     /**
      * @var \Doctrine\DBAL\PostgresTypes\TsqueryType
@@ -32,7 +21,7 @@ class TsqueryTest extends \PHPUnit_Framework_TestCase
     /**
      * Pre-instantiation setup.
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         Type::addType('tsquery', 'Doctrine\\DBAL\\PostgresTypes\\TsqueryType');
     }
@@ -40,7 +29,7 @@ class TsqueryTest extends \PHPUnit_Framework_TestCase
     /**
      * Pre-execution setup.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->platform = new PostgreSqlPlatform();
         $this->type = Type::getType('tsquery');

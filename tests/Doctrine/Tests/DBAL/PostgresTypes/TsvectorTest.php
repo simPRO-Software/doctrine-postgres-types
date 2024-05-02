@@ -1,21 +1,12 @@
 <?php
 
-/**
- * This file is part of Opensoft Doctrine Postgres Types.
- *
- * Copyright (c) 2013 Opensoft (http://opensoftdev.com)
- */
-namespace Doctrine\Tests\DBAL\Types;
+namespace Doctrine\Tests\DBAL\PostgresTypes;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class TsvectorTest.
- *
- * Unit tests for the TextArray type
- */
-class TsvectorTest extends \PHPUnit_Framework_TestCase
+class TsvectorTest extends TestCase
 {
     /**
      * @var \Doctrine\DBAL\PostgresTypes\TsvectorType
@@ -30,7 +21,7 @@ class TsvectorTest extends \PHPUnit_Framework_TestCase
     /**
      * Pre-instantiation setup.
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         Type::addType('tsvector', 'Doctrine\\DBAL\\PostgresTypes\\TsvectorType');
     }
@@ -38,7 +29,7 @@ class TsvectorTest extends \PHPUnit_Framework_TestCase
     /**
      * Pre-execution setup.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->_platform = new PostgreSqlPlatform();
         $this->_type = Type::getType('tsvector');
@@ -49,7 +40,7 @@ class TsvectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testTsvectorConvertsToDatabaseValue()
     {
-        $this->assertInternalType('string', $this->_type->convertToDatabaseValue(array('simple', 'extended'), $this->_platform));
+        $this->assertIsString($this->_type->convertToDatabaseValue(array('simple', 'extended'), $this->_platform));
     }
 
     /**
@@ -57,6 +48,6 @@ class TsvectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testTsvectorConvertsToPHPValue()
     {
-        $this->assertInternalType('array', $this->_type->convertToPHPValue('ts:simple ts:extended', $this->_platform));
+        $this->assertIsArray($this->_type->convertToPHPValue('ts:simple ts:extended', $this->_platform));
     }
 }

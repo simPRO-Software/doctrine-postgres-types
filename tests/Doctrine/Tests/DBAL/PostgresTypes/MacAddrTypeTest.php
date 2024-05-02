@@ -1,19 +1,12 @@
 <?php
 
-/**
- * This file is part of Opensoft Doctrine Postgres Types.
- *
- * Copyright (c) Opensoft (http://opensoftdev.com)
- */
-namespace Doctrine\Tests\DBAL\Types;
+namespace Doctrine\Tests\DBAL\PostgresTypes;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @author Evgeny Kukharik <jonegkk9@gmail.com>
- */
-class MacAddrTypeTest extends \PHPUnit_Framework_TestCase
+class MacAddrTypeTest extends TestCase
 {
     /**
      * @var \Doctrine\DBAL\PostgresTypes\InetType
@@ -28,7 +21,7 @@ class MacAddrTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Pre-instantiation setup.
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         Type::addType('macaaddr', 'Doctrine\\DBAL\\PostgresTypes\\MacAddrType');
     }
@@ -36,7 +29,7 @@ class MacAddrTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Pre-execution setup.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->_platform = new PostgreSqlPlatform();
         $this->_type = Type::getType('macaaddr');
@@ -50,7 +43,7 @@ class MacAddrTypeTest extends \PHPUnit_Framework_TestCase
     public function testMacAddrConvertsToDatabaseValue($serialized, $phpValueToConvert)
     {
         $converted = $this->_type->convertToDatabaseValue($phpValueToConvert, $this->_platform);
-        $this->assertInternalType('string', $converted);
+        $this->assertIsString($converted);
         $this->assertEquals($serialized, $converted);
     }
 
@@ -62,17 +55,16 @@ class MacAddrTypeTest extends \PHPUnit_Framework_TestCase
     public function testMacAddrConvertsToPHPValue($serialized, $databaseValueToConvert)
     {
         $converted = $this->_type->convertToPHPValue($serialized, $this->_platform);
-        $this->assertInternalType('string', $converted);
+        $this->assertIsString($converted);
         $this->assertEquals($databaseValueToConvert, $converted);
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     *
      * @dataProvider exceptionProvider
      */
     public function testMacAddrThrowExceptionOnConversion($value)
     {
+        static::expectException(\InvalidArgumentException::class);
         $this->_type->convertToDatabaseValue($value, $this->_platform);
     }
 
