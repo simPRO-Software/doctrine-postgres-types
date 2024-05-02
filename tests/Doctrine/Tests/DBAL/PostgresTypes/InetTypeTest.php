@@ -1,19 +1,12 @@
 <?php
 
-/**
- * This file is part of Opensoft Doctrine Postgres Types.
- *
- * Copyright (c) Opensoft (http://opensoftdev.com)
- */
-namespace Doctrine\Tests\DBAL\Types;
+namespace Doctrine\Tests\DBAL\PostgresTypes;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @author Richard Fullmer <richard.fullmer@opensoftdev.com>
- */
-class InetTypeTest extends \PHPUnit_Framework_TestCase
+class InetTypeTest extends TestCase
 {
     /**
      * @var \Doctrine\DBAL\PostgresTypes\InetType
@@ -28,7 +21,7 @@ class InetTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Pre-instantiation setup.
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         Type::addType('inet', 'Doctrine\\DBAL\\PostgresTypes\\InetType');
     }
@@ -36,7 +29,7 @@ class InetTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Pre-execution setup.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->_platform = new PostgreSqlPlatform();
         $this->_type = Type::getType('inet');
@@ -50,7 +43,7 @@ class InetTypeTest extends \PHPUnit_Framework_TestCase
     public function testInetConvertsToDatabaseValue($serialized, $phpValueToConvert)
     {
         $converted = $this->_type->convertToDatabaseValue($phpValueToConvert, $this->_platform);
-        $this->assertInternalType('string', $converted);
+        $this->assertIsString($converted);
         $this->assertEquals($serialized, $converted);
     }
 
@@ -62,7 +55,7 @@ class InetTypeTest extends \PHPUnit_Framework_TestCase
     public function testInetConvertsToPHPValue($serialized, $databaseValueToConvert)
     {
         $converted = $this->_type->convertToPHPValue($serialized, $this->_platform);
-        $this->assertInternalType('string', $converted);
+        $this->assertIsString($converted);
         $this->assertEquals($databaseValueToConvert, $converted);
     }
 

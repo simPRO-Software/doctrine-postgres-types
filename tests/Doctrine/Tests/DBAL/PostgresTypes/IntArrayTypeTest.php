@@ -5,17 +5,18 @@
  *
  * Copyright (c) 2013 Opensoft (http://opensoftdev.com)
  */
-namespace Doctrine\Tests\DBAL\Types;
+namespace Doctrine\Tests\DBAL\PostgresTypes;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class IntArrayTypeTest.
  *
  * Unit tests for the IntArray type
  */
-class IntArrayTypeTest extends \PHPUnit_Framework_TestCase
+class IntArrayTypeTest extends TestCase
 {
     /**
      * @var \Doctrine\DBAL\PostgresTypes\IntArrayType
@@ -30,7 +31,7 @@ class IntArrayTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Pre-instantiation setup.
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         Type::addType('int_array', 'Doctrine\\DBAL\\PostgresTypes\\IntArrayType');
     }
@@ -38,7 +39,7 @@ class IntArrayTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Pre-execution setup.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->_platform = new PostgreSqlPlatform();
         $this->_type = Type::getType('int_array');
@@ -52,7 +53,7 @@ class IntArrayTypeTest extends \PHPUnit_Framework_TestCase
     public function testIntArrayConvertsToDatabaseValue($serialized, $array)
     {
         $converted = $this->_type->convertToDatabaseValue($array, $this->_platform);
-        $this->assertInternalType('string', $converted);
+        $this->assertIsString($converted);
         $this->assertEquals($serialized, $converted);
     }
 
@@ -64,11 +65,11 @@ class IntArrayTypeTest extends \PHPUnit_Framework_TestCase
     public function testIntArrayConvertsToPHPValue($serialized, $array)
     {
         $converted = $this->_type->convertToPHPValue($serialized, $this->_platform);
-        $this->assertInternalType('array', $converted);
+        $this->assertIsArray($converted);
         $this->assertEquals($array, $converted);
 
         if (sizeof($converted) > 0) {
-            $this->assertInternalType('int', reset($converted));
+            $this->assertIsInt(reset($converted));
         }
     }
 

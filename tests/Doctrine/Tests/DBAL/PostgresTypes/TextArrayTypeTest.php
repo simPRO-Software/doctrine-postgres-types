@@ -1,20 +1,12 @@
 <?php
 
-/**
- * This file is part of Opensoft Doctrine Postgres Types.
- *
- * Copyright (c) 2013 Opensoft (http://opensoftdev.com)
- */
-namespace Doctrine\Tests\DBAL\Types;
+namespace Doctrine\Tests\DBAL\PostgresTypes;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Types\Type;
-use Doctrine\DBAL\Platforms\PostgreSqlPlatform;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @author Richard Fullmer <richard.fullmer@opensoftdev.com>
- * @author Eugene Leonovich <gen.work@gmail.com>
- */
-class TextArrayTypeTest extends \PHPUnit_Framework_TestCase
+class TextArrayTypeTest extends TestCase
 {
     /**
      * @var \Doctrine\DBAL\PostgresTypes\TextArrayType
@@ -26,12 +18,12 @@ class TextArrayTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $_platform;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         Type::addType('text_array', 'Doctrine\\DBAL\\PostgresTypes\\TextArrayType');
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->_platform = new PostgreSqlPlatform();
         $this->_type = Type::getType('text_array');
