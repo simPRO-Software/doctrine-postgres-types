@@ -6,9 +6,16 @@ Provides Common Postgres Types for Doctrine
 Provides Doctrine Type classes for common postgres types
 
 ### Installation
-
+Add the following to your composer.json
+```json
+{
+    "type": "vcs",
+    "url": "https://github.com/simPRO-Software/doctrine-postgres-types.git"
+}
+```
+And then add the following to the require section
 ```bash
-composer require opensoft/doctrine-postgres-types
+simpro/doctrine-postgres-types
 ```
 
 ### Usage
